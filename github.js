@@ -1,0 +1,23 @@
+class GitHub {
+  constructor() {
+    this.client_id = 'd347e8bc194c9204cdf5',
+    this.client_secret = '5e2a44d041baae4d614d067a4e1d0685c3c5d180';
+    this.repos_count = 5;
+    this.repos_sort = 'created: asc';
+  }
+
+  async getUser(user){
+    const profileResponse = await fetch(`https://api.github.com/users/${user}?client_id=${this.client_id}&client_secret=${this.client_secret}`);
+
+    const repoResponse = await fetch(`https://api.github.com/users/${user}/repos?per_page=${this.repos_count}&sort=${this.repos_sort}&client_id=${this.client_id}&client_secret=${this.client_secret}`);
+
+    const profile = await profileResponse.json();
+    const repos = await repoResponse.json();
+
+    return {
+      profile,
+      repos
+    }
+
+  }
+}
